@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:html';
+//import 'dart:html';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +28,11 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: const Text('Liquimech Propoerty Demo'),
         actions: <Widget>[
-          IconButton(onPressed: () {}, icon: const Icon(Icons.refresh))
+          IconButton(
+              onPressed: () {
+                getProperties();
+              },
+              icon: const Icon(Icons.refresh))
         ],
       ),
       body: SafeArea(
@@ -46,9 +50,9 @@ Future<http.Response?> getToken() async {
     headers: {'content-type': 'application/x-www-form-urlencoded'},
     body: {
       'grant_type': 'client_credentials',
-      'client_id': '11BPBTVoGudlcJ8408X6HpTLYXGyEuJ1', //  client id
+      'client_id': 'MMeMs4TcGZfvOpct27clCxis0wEYTjVv', //  client id
       'client_secret':
-          'XJJ1N3B1BpggeI5qSpF3K3t6kYSa482Ry2lNe7ofcA0o71hTpIqgh1Nn883IHnIs', //  client credentials
+          '3XgFOMbhMwhq3tgdqCbcteAx1q09I6fa540TXZf3Fxf9YM4o8WyVOljxtEVslSK3', //  client credentials
       'audience': 'https://api2.arduino.cc/iot'
     },
   ).then(
@@ -56,7 +60,7 @@ Future<http.Response?> getToken() async {
       if (response.statusCode == 200) {
         var responseData = json.decode(response.body);
         accessToken = responseData['access_token'];
-        print(accessToken);
+        (accessToken.toString());
         return accessToken;
       } else {
         print('Error');
@@ -66,6 +70,7 @@ Future<http.Response?> getToken() async {
 }
 
 Future<http.Response?> getProperties() async {
+  await getToken();
   var url = Uri.parse(
       'https://api2.arduino.cc/iot/v2/things/e7644871-3e83-4f1b-ae46-90312beeb40a/properties/12b6ca64-44fc-4c88-944a-d1af18666078');
   var response = await http.get(

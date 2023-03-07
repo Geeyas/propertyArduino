@@ -1,5 +1,8 @@
+//import 'dart:html';
+
 import 'package:flutter/material.dart';
 import 'package:propertyapp/homepage.dart';
+import 'dart:io';
 
 void main() {
   runApp(const MyApp());
@@ -12,7 +15,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     getToken();
-    // getProperties();
     return MaterialApp(
       title: 'Liquimech Demo',
       theme: ThemeData(
