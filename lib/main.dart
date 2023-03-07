@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    getToken();
+    // getToken();
     return MaterialApp(
       title: 'Liquimech Demo',
       theme: ThemeData(

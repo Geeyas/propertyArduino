@@ -1,49 +1,96 @@
-//import 'dart:html';
-import 'package:flutter/material.dart';
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+import 'package:flutter/material.dart';
 
-class PropertyData {
-  String propertyName;
-  String propertyWidget;
-  dynamic apiResponse;
+class MyData {
+  final String createdAt;
+  final String href;
+  final String id;
+  final String lastValue;
+  final String name;
+  final String permission;
+  final bool persist;
+  final String tag;
+  final String thingId;
+  final String thingName;
+  final String type;
+  final String updateStrategy;
+  final String updatedAt;
+  final String valueUpdatedAt;
+  final String variableName;
 
-  PropertyData(
-      {this.propertyName = "", this.propertyWidget = "", this.apiResponse});
+  MyData({
+    required this.createdAt,
+    required this.href,
+    required this.id,
+    required this.lastValue,
+    required this.name,
+    required this.permission,
+    required this.persist,
+    required this.tag,
+    required this.thingId,
+    required this.thingName,
+    required this.type,
+    required this.updateStrategy,
+    required this.updatedAt,
+    required this.valueUpdatedAt,
+    required this.variableName,
+  });
 
-  factory PropertyData.fromJson(Map<String, dynamic> json) {
-    return PropertyData(
-      propertyName: json['propertyName'] ?? "",
-      propertyWidget: json['propertyWidget'] ?? "",
-      apiResponse: json['apiResponse'],
+  factory MyData.fromJson(Map<String, dynamic> json) {
+    return MyData(
+      createdAt: json['created_at'],
+      href: json['href'],
+      id: json['id'],
+      lastValue: json['last_value'],
+      name: json['name'],
+      permission: json['permission'],
+      persist: json['persist'],
+      tag: json['tag'],
+      thingId: json['thing_id'],
+      thingName: json['thing_name'],
+      type: json['type'],
+      updateStrategy: json['update_strategy'],
+      updatedAt: json['updated_at'],
+      valueUpdatedAt: json['value_updated_at'],
+      variableName: json['variable_name'],
     );
   }
 }
 
-Future<List<PropertyData>> iterateMapAndRetrieveValues(
-    Map<int, Map<String, dynamic>> data) async {
-  List<PropertyData> results = [];
+// class MyApp extends StatefulWidget {
+//   const MyApp({Key? key}) : super(key: key);
 
-  for (int index in data.keys) {
-    Map<String, dynamic>? map = data[index];
-    String propertyId = map!['property_id'];
-    String thingId = map['thing_id'];
+//   @override
+//   _MyAppState createState() => _MyAppState();
+// }
 
-    String apiUrl =
-        "https://api2.arduino.cc/iot/v2/things/$propertyId/properties/$thingId";
-    final response = await http.get(Uri.parse(apiUrl));
+// class _MyAppState extends State<MyApp> {
+//   late MyData myData;
 
-    if (response.statusCode == 200) {
-      PropertyData propertyData = PropertyData.fromJson({
-        'propertyName': map['property_name'],
-        'propertyWidget': map['property_widget'],
-        'apiResponse': json.decode(response.body),
-      });
-      results.add(propertyData);
-    } else {
-      print("Error: ${response.statusCode}");
-    }
-  }
+//   void _parseJson(String jsonString) {
+//     final jsonData = jsonDecode(jsonString);
+//     myData = MyData.fromJson(jsonData);
+//   }
 
-  return results;
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: AppBar(
+//         title: Text('My App'),
+//       ),
+//       body: Center(
+//         child: myData != null
+//             ? Column(
+//                 mainAxisAlignment: MainAxisAlignment.center,
+//                 children: [
+//                   Text('ID: ${myData.id}'),
+//                   Text('Name: ${myData.name}'),
+//                   Text('Thing Name: ${myData.thingName}'),
+//                   Text('Type: ${myData.type}'),
+//                 ],
+//               )
+//             : Text('No data available'),
+//       ),
+//     );
+//   }
+// }
