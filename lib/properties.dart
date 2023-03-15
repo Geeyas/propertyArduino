@@ -1,5 +1,14 @@
+// ignore_for_file: avoid_print, prefer_interpolation_to_compose_strings
 import 'dart:convert';
 import 'package:flutter/material.dart';
+
+// for making http requests
+import 'package:http/http.dart' as http;
+import 'package:propertyapp/properties.dart';
+
+String accessToken = '';
+String id = 'e7644871-3e83-4f1b-ae46-90312beeb40a'; // the ID of the thing
+String pid = '12b6ca64-44fc-4c88-944a-d1af18666078'; //
 
 class MyData {
   final String createdAt;
@@ -35,6 +44,33 @@ class MyData {
     required this.valueUpdatedAt,
     required this.variableName,
   });
+
+  Future<http.Response?> getToken() async {
+    var url = Uri.parse('https://api2.arduino.cc/iot/v1/clients/token');
+    var response = await http.post(
+      url,
+      headers: {'content-type': 'application/x-www-form-urlencoded'},
+      body: {
+        'grant_type': 'client_credentials',
+        'client_id': 'MMeMs4TcGZfvOpct27clCxis0wEYTjVv', //  client id
+        'client_secret':
+            '3XgFOMbhMwhq3tgdqCbcteAx1q09I6fa540TXZf3Fxf9YM4o8WyVOljxtEVslSK3', //  client credentials
+        'audience': 'https://api2.arduino.cc/iot'
+      },
+    ).then(
+      (response) {
+        if (response.statusCode == 200) {
+          var responseData = json.decode(response.body);
+          accessToken = responseData['access_token'];
+          (accessToken.toString());
+          print('token received');
+          return accessToken;
+        } else {
+          print('Error');
+        }
+      },
+    );
+  }
 
   factory MyData.fromJson(Map<String, dynamic> json) {
     return MyData(
