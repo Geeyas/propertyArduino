@@ -21,6 +21,18 @@ class _MyHomePageState extends State<MyHomePage> {
   // initialsing the class
   MyData? prpData;
 
+  //initialising the MapClass
+  Map<String, dynamic> jsonData = {};
+
+//variable for sorting A-Z
+  bool _sortAscending = true;
+
+  void _sortData() {
+    setState(() {
+      _sortAscending = !_sortAscending;
+    });
+  }
+
   //function to get access token
   Future<http.Response?> getToken() async {
     var url = Uri.parse('https://api2.arduino.cc/iot/v1/clients/token');
@@ -68,7 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
           final data = json.decode(response.body);
 
           // Iterating the data into key value pair
-          Map<String, dynamic> jsonData = data;
+          jsonData = data;
           jsonData.forEach((key, value) {
             print('$key: $value'); // printing out the value in console
           });
@@ -102,12 +114,15 @@ class _MyHomePageState extends State<MyHomePage> {
         actions: <Widget>[
           IconButton(
             onPressed: () {
-// button for sorting A-Z
-              const snackBar = SnackBar(
-                content: Text('Sorting A-Z'),
+              _sortAscending = !_sortAscending;
+              // button for sorting A-Z
+              var snackBar = SnackBar(
+                content: Text(_sortAscending ? 'Sort A-Z' : 'Sort Z-A'),
               );
               // ignore: use_build_context_synchronously
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
+
+              //code for sorting goes here
             },
             icon: const Icon(Icons.sort_by_alpha_rounded),
           ),
