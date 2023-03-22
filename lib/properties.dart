@@ -53,3 +53,125 @@ class MyData {
     );
   }
 }
+
+ 
+// Card(
+// child: ListTile(
+// title: Text(
+// 'Created At : \n ${prpData?.createdAt}',
+// style: const TextStyle(fontSize: 18),
+// ),
+// ),
+// ),
+// Card(
+// child: ListTile(
+// title: Text(
+// 'Href : \n ${prpData?.href}',
+// style: const TextStyle(fontSize: 18),
+// ),
+// ),
+// ),
+// Card(
+// child: ListTile(
+// title: Text(
+// 'ID : \n ${prpData?.id}',
+// style: const TextStyle(fontSize: 18),
+// ),
+// ),
+// ),
+// Card(
+// child: ListTile(
+// title: Text(
+// 'Last value : ${prpData?.lastValue}',
+// style: const TextStyle(fontSize: 18),
+// ),
+// ),
+// ),
+// Card(
+// child: ListTile(
+// title: Text(
+// 'Name : ${prpData?.name}',
+// style: const TextStyle(fontSize: 18),
+// ),
+// ),
+// ),
+// Card(
+// child: ListTile(
+// title: Text(
+// 'Permission : ${prpData?.permission}',
+// style: const TextStyle(fontSize: 18),
+// ),
+// ),
+// ),
+// Card(
+// child: ListTile(
+// title: Text(
+// 'Persist : ${prpData?.persist}',
+// style: const TextStyle(fontSize: 18),
+// ),
+// ),
+// ),
+// Card(
+// child: ListTile(
+// title: Text(
+// 'Tag : ${prpData?.tag}',
+// style: const TextStyle(fontSize: 18),
+// ),
+// ),
+// ),
+// Card(
+// child: ListTile(
+// title: Text(
+// 'Thing ID : ${prpData?.thingId}',
+// style: const TextStyle(fontSize: 18),
+// ),
+// ),
+// ),
+// Card(
+// child: ListTile(
+// title: Text(
+// 'Thing name : ${prpData?.thingName}',
+// style: const TextStyle(fontSize: 18),
+// ),
+// ),
+// ),
+// Card(
+// child: ListTile(
+// title: Text(
+// 'Type : ${prpData?.type}',
+// style: const TextStyle(fontSize: 18),
+// ),
+// ),
+// ),
+// Card(
+// child: ListTile(
+// title: Text(
+// 'Update Strategy: ${prpData?.updateStrategy}',
+// style: const TextStyle(fontSize: 18),
+// ),
+// ),
+// ),
+// Card(
+// child: ListTile(
+// title: Text(
+// 'Updated At: ${prpData?.updatedAt}',
+// style: const TextStyle(fontSize: 18),
+// ),
+// ),
+// ),
+// Card(
+// child: ListTile(
+// title: Text(
+// 'Value Updated At: ${prpData?.valueUpdatedAt}',
+// style: const TextStyle(fontSize: 18),
+// ),
+// ),
+// ),
+// Card(
+// child: ListTile(
+// title: Text(
+// 'Variable Name: ${prpData?.variableName}',
+// style: const TextStyle(fontSize: 18),
+// ),
+// ),
+// ),

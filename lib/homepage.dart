@@ -81,9 +81,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
           // Iterating the data into key value pair
           jsonData = data;
-          jsonData.forEach((key, value) {
-            print('$key: $value'); // printing out the value in console
-          });
 
           //pushing the fetched key value pair into the created class
           prpData = MyData.fromJson(jsonData);
@@ -127,147 +124,49 @@ class _MyHomePageState extends State<MyHomePage> {
             icon: const Icon(Icons.sort_by_alpha_rounded),
           ),
           IconButton(
+            //button to refresh the fetched data
             onPressed: () {
-              //button to refresh the fetched data
-              getIndividualProperties(); // get the individual property list by taking propoerty value and thing id value
+              const snkBar = SnackBar(
+                content: Text('Refreshing data...'),
+              );
+              ScaffoldMessenger.of(context).showSnackBar(snkBar);
+              getToken();
+
+              Future.delayed(const Duration(seconds: 6), () {
+                getIndividualProperties(); // get the individual property list by taking propoerty value and thing id value
+              });
+
               // getPropertiesList(); // get the property list by taking propoerty value
             },
             icon: const Icon(Icons.task),
           )
         ],
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              Card(
-                child: ListTile(
-                  title: Text(
-                    'Created At : \n ${prpData?.createdAt}',
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                ),
-              ),
-              Card(
-                child: ListTile(
-                  title: Text(
-                    'Href : \n ${prpData?.href}',
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                ),
-              ),
-              Card(
-                child: ListTile(
-                  title: Text(
-                    'ID : \n ${prpData?.id}',
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                ),
-              ),
-              Card(
-                child: ListTile(
-                  title: Text(
-                    'Last value : ${prpData?.lastValue}',
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                ),
-              ),
-              Card(
-                child: ListTile(
-                  title: Text(
-                    'Name : ${prpData?.name}',
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                ),
-              ),
-              Card(
-                child: ListTile(
-                  title: Text(
-                    'Permission : ${prpData?.permission}',
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                ),
-              ),
-              Card(
-                child: ListTile(
-                  title: Text(
-                    'Persist : ${prpData?.persist}',
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                ),
-              ),
-              Card(
-                child: ListTile(
-                  title: Text(
-                    'Tag : ${prpData?.tag}',
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                ),
-              ),
-              Card(
-                child: ListTile(
-                  title: Text(
-                    'Thing ID : ${prpData?.thingId}',
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                ),
-              ),
-              Card(
-                child: ListTile(
-                  title: Text(
-                    'Thing name : ${prpData?.thingName}',
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                ),
-              ),
-              Card(
-                child: ListTile(
-                  title: Text(
-                    'Type : ${prpData?.type}',
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                ),
-              ),
-              Card(
-                child: ListTile(
-                  title: Text(
-                    'Update Strategy: ${prpData?.updateStrategy}',
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                ),
-              ),
-              Card(
-                child: ListTile(
-                  title: Text(
-                    'Updated At: ${prpData?.updatedAt}',
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                ),
-              ),
-              Card(
-                child: ListTile(
-                  title: Text(
-                    'Value Updated At: ${prpData?.valueUpdatedAt}',
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                ),
-              ),
-              Card(
-                child: ListTile(
-                  title: Text(
-                    'Variable Name: ${prpData?.variableName}',
-                    style: const TextStyle(fontSize: 18),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
+      body: ListView.builder(
+        itemCount: jsonData.length,
+        itemBuilder: (BuildContext context, int index) {
+          String key = jsonData.keys.elementAt(index);
+          dynamic value = jsonData[key];
+          return Card(
+            child: ListTile(
+              title: Text(key),
+              subtitle: Text(value.toString()),
+            ),
+          );
+        },
       ),
     );
   }
 }
+
+// Column(
+//             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//             children: [
+//               //     jsonData.forEach((key, value) {
+//               //   print('$key: $value'); // printing out the value in console
+//               // });
+//             ],
+//           ),
 
 //getting properties list from the arduino cloud
 Future<http.Response?> getPropertiesList() async {
