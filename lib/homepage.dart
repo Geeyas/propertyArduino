@@ -64,43 +64,18 @@ class _MyHomePageState extends State<MyHomePage> {
     ).then(
       (response) {
         if (response.statusCode == 200) {
+          // fetching data from the URL
           final data = json.decode(response.body);
 
-          print('createdAt: ' + data['created_at']);
-          print('href: ' + data['href']);
-          print('id: ' + data['id']);
-          print('lastValue: ' + data['last_value']);
-          print('name: ' + data['name']);
-          print('permission: ' + data['permission']);
-          print('persist: ' + data['persist'].toString());
-          print('tag: ' + data['tag'].toString());
-          print('thingId: ' + data['thing_id']);
-          print('thingName: ' + data['thing_name']);
-          print('type: ' + data['type']);
-          print('updatedStrategy: ' + data['update_strategy']);
-          print('updatedAt: ' + data['updated_at']);
-          print('valueUpdatedAt: ' + data['value_updated_at']);
-          print('variableName: ' + data['variable_name']);
+          // Iterating the data into key value pair
+          Map<String, dynamic> jsonData = data;
+          jsonData.forEach((key, value) {
+            print('$key: $value'); // printing out the value in console
+          });
 
-          prpData = MyData(
-            createdAt: data['created_at'],
-            href: data['href'],
-            id: data['id'],
-            lastValue: data['last_value'],
-            name: data['name'],
-            permission: data['permission'],
-            persist: data['persist'],
-            tag: data['tag'].toString(),
-            thingId: data['thing_id'],
-            thingName: data['thing_name'],
-            type: data['type'],
-            updateStrategy: data['update_strategy'],
-            updatedAt: data['updated_at'],
-            valueUpdatedAt: data['value_updated_at'],
-            variableName: data['variable_name'],
-          );
-
-          // runApp(MyHomePage());
+          //pushing the fetched key value pair into the created class
+          prpData = MyData.fromJson(jsonData);
+          /////////////////////////////////////////////////////////////////////////
         } else {
           throw Exception('Failed to load properties');
         }
@@ -113,7 +88,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void initState() {
     super.initState();
     getToken();
-    Future.delayed(Duration(seconds: 5), () {
+    Future.delayed(const Duration(seconds: 5), () {
       getIndividualProperties();
     });
   }
@@ -127,17 +102,18 @@ class _MyHomePageState extends State<MyHomePage> {
         actions: <Widget>[
           IconButton(
             onPressed: () {
-              getToken();
+// button for sorting A-Z
               const snackBar = SnackBar(
                 content: Text('Sorting A-Z'),
               );
               // ignore: use_build_context_synchronously
               ScaffoldMessenger.of(context).showSnackBar(snackBar);
             },
-            icon: const Icon(Icons.token),
+            icon: const Icon(Icons.sort_by_alpha_rounded),
           ),
           IconButton(
             onPressed: () {
+              //button to refresh the fetched data
               getIndividualProperties(); // get the individual property list by taking propoerty value and thing id value
               // getPropertiesList(); // get the property list by taking propoerty value
             },
@@ -301,39 +277,3 @@ Future<http.Response?> getPropertiesList() async {
     },
   );
 }
-
-// class MyData {
-//   final String createdAt;
-//   final String href;
-//   final String id;
-//   final String lastValue;
-//   final String name;
-//   final String permission;
-//   final bool persist;
-//   final String tag;
-//   final String thingId;
-//   final String thingName;
-//   final String type;
-//   final String updateStrategy;
-//   final String updatedAt;
-//   final String valueUpdatedAt;
-//   final String variableName;
-
-//   MyData({
-//     required this.createdAt,
-//     required this.href,
-//     required this.id,
-//     required this.lastValue,
-//     required this.name,
-//     required this.permission,
-//     required this.persist,
-//     required this.tag,
-//     required this.thingId,
-//     required this.thingName,
-//     required this.type,
-//     required this.updateStrategy,
-//     required this.updatedAt,
-//     required this.valueUpdatedAt,
-//     required this.variableName,
-//   });
-// }
